@@ -1,16 +1,18 @@
-
+import conf from '@/config.js'
 // initial state
 const state = () => ({
   isAuth: false,
   role: '',
-  id: ''
+  id: '',
+  screenToken: conf.TOKEN
 })
 
 // getters
 const getters = {
   getRole: state => state.role,
   getUserId: state => state.id,
-  isAuth: state => state.isAuth
+  isAuth: state => state.isAuth,
+  screenToken: state => state.screenToken
 }
 
 // actions

@@ -10,11 +10,17 @@
             />
         </div>
 
-        <ContentTable />
+        <ContentTable @openEditModal="openEditModal"/>
 
-        <b-modal v-model="isCardModalActive" width="400px">
+        <b-modal v-model="isCardModalActive" width="500px">
             <AddContentModal 
                 @close="isCardModalActive=false"
+            />
+        </b-modal>
+        <b-modal v-model="isEditModalActive" width="500px">
+            <EditContentModal 
+                @close="isEditModalActive=false"
+                :id="currentId"
             />
         </b-modal>
     </div>
@@ -23,15 +29,25 @@
 <script>
 import ContentTable from "@/components/content/ContentTable"
 import AddContentModal from "@/components/content/AddContentModal"
+import EditContentModal from "@/components/content/EditContentModal"
 
 export default {
-    components: {ContentTable, AddContentModal},
+    components: {ContentTable, AddContentModal, EditContentModal},
 
     data() {
         return {
-            isCardModalActive: false
+            isCardModalActive: false,
+            isEditModalActive: false,
+            currentId: ''
         }
     },
+
+    methods: {
+        openEditModal(id) {
+            this.isEditModalActive = true
+            this.currentId = id
+        }
+    }
 }
 </script>
 

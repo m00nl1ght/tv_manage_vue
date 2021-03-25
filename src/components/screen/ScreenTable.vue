@@ -11,6 +11,9 @@
                 {{ props.row.title }}
             </b-table-column>
             
+            <b-table-column field="comment" label="Адрес" v-slot="props" centered>
+                {{ props.row.url }}
+            </b-table-column>
 
             <b-table-column field="comment" label="Комментарий" v-slot="props" centered>
                 {{ props.row.comment }}
