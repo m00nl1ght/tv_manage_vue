@@ -6,7 +6,11 @@ const state = () => ({
 
 // getters
 const getters = {
-    screens: state => state.screens
+    screens: state => state.screens,
+
+    getById: state => id => {
+        return state.screens.find(item => item.id === id)
+    }
 }
 
 // actions
@@ -25,6 +29,28 @@ const actions = {
                     resolve({
                         status: true,
                         message: 'Screen added'
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                reject({
+                  status: false,
+                  message: err
+                })
+            })
+        })
+    },
+
+    editScreen(context, data) {
+        return new Promise((resolve, reject) => {
+            HTTP.put('api/screen/' + data.id, data)
+            .then(res => {
+                if(res.status == 200) {
+                    context.commit('editScreen', res.data)
+                    resolve({
+                        status: true,
+                        message: 'Content changed'
                     })
                 }
             })
@@ -68,6 +94,15 @@ const mutations = {
 
     addScreen(context, content) {
         context.screens.push(content)
+    },
+
+    editScreen(context, item) {
+        context.screens = context.screens.map(element => {
+            if(element.id == item.id) {
+                return item
+            }
+            return element
+        });
     },
 
     deleteScreen(context, id) {

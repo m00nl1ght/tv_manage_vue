@@ -2,7 +2,7 @@
     <form @submit.prevent="onSubmit">
         <div class="modal-card" style="width: auto">
             <header class="modal-card-head">
-                <p class="modal-card-title">Изменить URL</p>
+                <p class="modal-card-title">Изменить экран</p>
                 <button
                     type="button"
                     class="delete"
@@ -18,10 +18,18 @@
                     </b-input>
                 </b-field>
 
-                <b-field label="Адрес страницы">
+                <b-field label="Адрес экрана">
                     <b-input
                         v-model="url"
-                        placeholder="Адрес страницы"
+                        placeholder="Адрес экрана"
+                        required>
+                    </b-input>
+                </b-field>
+
+                <b-field label="Комментарий">
+                    <b-input
+                        v-model="comment"
+                        placeholder="Комментарий"
                         required>
                     </b-input>
                 </b-field>
@@ -32,7 +40,7 @@
                     label="Отмена"
                     @click="$emit('close')" />
                 <b-button
-                    label="Изменить контент"
+                    label="Изменить экран"
                     type="is-primary" 
                     native-type="submit"/>
             </footer>
@@ -50,22 +58,23 @@ export default {
         return {
             title: '',
             url: 'http://',
-            content: ''
+            comment: ''
         }
     },
 
     computed: {
         ...mapGetters({
-            getById: 'content/getById'
+            getById: 'screen/getById'
         })
     },
 
     methods: {
         onSubmit() {
-            this.$store.dispatch('content/editContent', {
+            this.$store.dispatch('screen/editScreen', {
                 id: this.id,
                 title: this.title, 
-                url: this.url
+                url: this.url, 
+                comment: this.comment
             })
             .then(res => {
                 if(res.status) {
@@ -74,7 +83,7 @@ export default {
                         message: res.message,
                         type: 'is-success'
                     })
-                    
+
                     this.$emit('close')
                 }
             })
@@ -86,8 +95,7 @@ export default {
         
         this.title = current.title
         this.url = current.url
-        // this.title = this.getById(this.id).title
-        // this.url = this.getById(this.id).url
+        this.comment = current.comment
     }
 }
 </script>

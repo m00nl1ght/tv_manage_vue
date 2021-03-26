@@ -3,7 +3,7 @@
         :data="content"
         focusable
     >
-        <b-table-column field="id" v-slot="props" centered>
+        <b-table-column v-slot="props" centered>
             <b-button
                 size="is-small"
                 @click="onClick(props.row.id)">

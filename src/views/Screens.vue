@@ -10,9 +10,16 @@
             />
         </div>
 
-        <ScreenTable />
+        <ScreenTable @openEditModal="openEditModal"/>
 
-        <b-modal v-model="isCardModalActive" width="400px">
+        <b-modal v-model="isEditModalActive" width="500px">
+            <EditScreenModal 
+                @close="isEditModalActive=false"
+                :id="currentId"
+            />
+        </b-modal>
+
+        <b-modal v-model="isCardModalActive" width="500px">
             <AddScreenModal 
                 @close="isCardModalActive=false"
             />
@@ -22,15 +29,25 @@
 
 <script>
 import AddScreenModal from "@/components/screen/AddScreenModal"
+import EditScreenModal from "@/components/screen/EditScreenModal"
 import ScreenTable from "@/components/screen/ScreenTable"
 
 export default {
-    components: {AddScreenModal, ScreenTable},
+    components: {AddScreenModal, EditScreenModal, ScreenTable},
 
     data() {
         return {
-            isCardModalActive: false
+            isCardModalActive: false,
+            isEditModalActive: false,
+            currentId: ''
         }
     },
+
+    methods: {
+        openEditModal(id) {
+            this.isEditModalActive = true
+            this.currentId = id
+        }
+    }
 }
 </script>
